@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Tree4All — Grimoire des Semeurs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <div id="demo-banner">
+      🌱 Prototype de démonstration — les zones et données affichées sont <strong>fictives</strong>, en attente d'intégration des vraies données officielles.
+      <button id="demo-banner-close" aria-label="Fermer">×</button>
+    </div>
+
+    <header id="topbar">
+      <div id="brand">
+        <span id="brand-icon">🌳</span>
+        <span id="brand-name">Tree4All</span>
+      </div>
+      <div id="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Chercher une ville, un quartier…" />
+      </div>
+      <button id="profile-badge" title="Mon Grimoire">
+        <span id="profile-badge-ring"></span>
+        <span id="profile-badge-icon">🌰</span>
+      </button>
+    </header>
+
+    <div id="plant-fab" title="Ajouter une plantation">🪄</div>
+
+    <div id="map"></div>
+
+    <div id="locate-btn" title="Me localiser">📍</div>
+
+    <div id="filters">
+      <button class="filter-chip active" data-filter="all">Tout</button>
+      <button class="filter-chip" data-filter="permis">Permis de végétaliser</button>
+      <button class="filter-chip" data-filter="naturelle">Zone naturelle</button>
+      <button class="filter-chip" data-filter="association">Événement association</button>
+    </div>
+
+    <div id="sheet-overlay"></div>
+    <div id="sheet">
+      <div id="sheet-handle"></div>
+      <div id="sheet-content">
+        <!-- injecté en JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "paris-charonne",
+    "nom": "Pied d'arbre — Rue de Charonne",
+    "ville": "Paris",
+    "pays": "France",
+    "type": "permis",
+    "lat": 48.8558,
+    "lng": 2.3838,
+    "description": "Fosse de plantation libre au pied d'un tilleul existant, éligible au permis de végétaliser de la Ville de Paris.",
+    "regles": "Hauteur max. 40 cm sans autorisation spéciale, entretien à la charge du demandeur, pas d'espèces invasives.",
+    "especes": ["cornouiller", "erable-champetre"]
+  },
+  {
+    "id": "paris-leon-blum",
+    "nom": "Jardinière partagée — Place Léon Blum",
+    "ville": "Paris",
+    "pays": "France",
+    "type": "permis",
+    "lat": 48.8567,
+    "lng": 2.3766,
+    "description": "Bac de plantation collectif installé sur trottoir large, géré par un collectif de riverains.",
+    "regles": "Arrosage collectif obligatoire l'été, passage piéton à conserver à 1,60 m minimum.",
+    "especes": ["cornouiller", "sureau-noir"]
+  },
+  {
+    "id": "paris-petite-ceinture",
+    "nom": "Talus végétalisable — Petite Ceinture Ménilmontant",
+    "ville": "Paris",
+    "pays": "France",
+    "type": "naturelle",
+    "lat": 48.8697,
+    "lng": 2.3956,
+    "description": "Zone naturelle classée N au PLU le long de l'ancienne voie ferrée, plantations encadrées par Paris & Métropole Aménagement.",
+    "regles": "Demande préalable obligatoire, essences indigènes uniquement, accès réglementé.",
+    "especes": ["charme", "aubepine", "noisetier"]
+  },
+  {
+    "id": "paris-belleville",
+    "nom": "Verger participatif — Parc de Belleville",
+    "ville": "Paris",
+    "pays": "France",
+    "type": "association",
+    "lat": 48.8721,
+    "lng": 2.3835,
+    "description": "Sessions de plantation organisées deux fois par an par une association de quartier, en partenariat avec la mairie du 20e.",
+    "regles": "Inscription préalable requise, encadrement par des bénévoles formés.",
+    "especes": ["noisetier", "sureau-noir"]
+  },
+  {
+    "id": "nantes-ile",
+    "nom": "Pied d'arbre — Île de Nantes",
+    "ville": "Nantes",
+    "pays": "France",
+    "type": "permis",
+    "lat": 47.2089,
+    "lng": -1.5586,
+    "description": "Fosse d'arbre éligible à la charte de végétalisation de Nantes Métropole.",
+    "regles": "Déclaration en ligne sur le portail participatif, plantes grimpantes autorisées.",
+    "especes": ["erable-champetre", "cornouiller"]
+  },
+  {
+    "id": "bruxelles-josaphat-rue",
+    "nom": "Permis de verdurisation — Rue Josaphat",
+    "ville": "Schaerbeek (Bruxelles)",
+    "pays": "Belgique",
+    "type": "permis",
+    "lat": 50.8676,
+    "lng": 4.3738,
+    "description": "Pied de façade végétalisable dans le cadre du dispositif régional bruxellois de verdurisation de rue.",
+    "regles": "Largeur max. 60 cm en pied de façade, pas d'entrave au passage PMR.",
+    "especes": ["cornouiller", "erable-champetre"]
+  },
+  {
+    "id": "bruxelles-parc-josaphat",
+    "nom": "Zone naturelle — Parc Josaphat",
+    "ville": "Schaerbeek (Bruxelles)",
+    "pays": "Belgique",
+    "type": "naturelle",
+    "lat": 50.8697,
+    "lng": 4.3819,
+    "description": "Zone de renaturation partielle gérée par Bruxelles Environnement, plantations encadrées.",
+    "regles": "Projet à valider avec le service espaces verts communal, essences indigènes uniquement.",
+    "especes": ["charme", "tilleul-petites-feuilles", "if"]
+  },
+  {
+    "id": "bruxelles-soignes",
+    "nom": "Plantation citoyenne — Forêt de Soignes",
+    "ville": "Bruxelles",
+    "pays": "Belgique",
+    "type": "association",
+    "lat": 50.7969,
+    "lng": 4.4103,
+    "description": "Journées de plantation organisées par une association de protection de la forêt, en lisière encadrée.",
+    "regles": "Inscription obligatoire, groupes encadrés par des gardes forestiers.",
+    "especes": ["charme", "aubepine"]
+  }
+]

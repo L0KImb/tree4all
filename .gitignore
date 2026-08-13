@@ -1,0 +1,14 @@
+# Node / tooling
+node_modules/
+nul
+
+# Flutter (futur projet mobile)
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

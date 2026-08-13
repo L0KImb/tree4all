@@ -1,0 +1,200 @@
+[
+  {
+    "id": "charme",
+    "nom": "Charme commun",
+    "latin": "Carpinus betulus",
+    "icone": "🌳",
+    "categorie": "arbre",
+    "tags": ["indigène", "ombre", "haie"],
+    "description": "Robuste et facile à tailler, parfait en haie libre. Feuillage marcescent qui garde ses feuilles brunes en hiver.",
+    "xpBase": 100,
+    "sourcesGraines": ["grainotheque", "semences-paysannes"]
+  },
+  {
+    "id": "erable-champetre",
+    "nom": "Érable champêtre",
+    "latin": "Acer campestre",
+    "icone": "🍁",
+    "categorie": "arbre",
+    "tags": ["indigène", "mellifère", "petit espace"],
+    "description": "Petit érable indigène, très mellifère, s'adapte bien aux sols urbains et aux petits pieds d'arbre.",
+    "xpBase": 100,
+    "sourcesGraines": ["grainotheque", "semences-paysannes"]
+  },
+  {
+    "id": "tilleul-petites-feuilles",
+    "nom": "Tilleul à petites feuilles",
+    "latin": "Tilia cordata",
+    "icone": "🌳",
+    "categorie": "arbre",
+    "tags": ["indigène", "mellifère", "ombrage"],
+    "description": "Grand arbre d'ombrage traditionnel des villes, très mellifère, apprécié des abeilles urbaines.",
+    "xpBase": 100,
+    "sourcesGraines": ["grainotheque", "semences-paysannes"]
+  },
+  {
+    "id": "if",
+    "nom": "If commun",
+    "latin": "Taxus baccata",
+    "icone": "🌲",
+    "categorie": "arbre",
+    "tags": ["indigène", "persistant", "ombre dense"],
+    "description": "Persistant, tolère très bien l'ombre et la taille, adapté aux petits espaces contraints.",
+    "xpBase": 100,
+    "sourcesGraines": ["grainotheque"]
+  },
+  {
+    "id": "cornouiller",
+    "nom": "Cornouiller sanguin",
+    "latin": "Cornus sanguinea",
+    "icone": "🌿",
+    "categorie": "arbuste",
+    "tags": ["indigène", "biodiversité", "arbuste"],
+    "description": "Arbuste aux tiges rouges en hiver, baies appréciées des oiseaux. Idéal en jardinière partagée.",
+    "xpBase": 40,
+    "sourcesGraines": ["grainotheque", "semences-paysannes"]
+  },
+  {
+    "id": "noisetier",
+    "nom": "Noisetier",
+    "latin": "Corylus avellana",
+    "icone": "🌰",
+    "categorie": "arbuste",
+    "tags": ["indigène", "comestible", "haie"],
+    "description": "Croissance rapide, production de noisettes, excellent pour une haie nourricière en ville.",
+    "xpBase": 40,
+    "sourcesGraines": ["grainotheque", "kokopelli"]
+  },
+  {
+    "id": "sureau-noir",
+    "nom": "Sureau noir",
+    "latin": "Sambucus nigra",
+    "icone": "🫐",
+    "categorie": "arbuste",
+    "tags": ["indigène", "comestible", "croissance rapide"],
+    "description": "Pousse vite, fleurs et baies comestibles, très tolérant aux sols pauvres et à l'ombre partielle.",
+    "xpBase": 40,
+    "sourcesGraines": ["grainotheque"]
+  },
+  {
+    "id": "aubepine",
+    "nom": "Aubépine monogyne",
+    "latin": "Crataegus monogyna",
+    "icone": "🌸",
+    "categorie": "arbuste",
+    "tags": ["indigène", "biodiversité", "haie défensive"],
+    "description": "Excellent refuge pour les oiseaux nicheurs, floraison printanière généreuse, très rustique.",
+    "xpBase": 40,
+    "sourcesGraines": ["grainotheque"]
+  },
+  {
+    "id": "coquelicot",
+    "nom": "Coquelicot",
+    "latin": "Papaver rhoeas",
+    "icone": "🌺",
+    "categorie": "fleur",
+    "tags": ["indigène", "mellifère", "facile"],
+    "description": "Fleur sauvage indigène iconique, se ressème seule d'année en année, adorée des pollinisateurs.",
+    "xpBase": 10,
+    "sourcesGraines": ["grainotheque", "bourse-graines"]
+  },
+  {
+    "id": "bleuet-des-champs",
+    "nom": "Bleuet des champs",
+    "latin": "Centaurea cyanus",
+    "icone": "🌼",
+    "categorie": "fleur",
+    "tags": ["indigène", "mellifère", "facile"],
+    "description": "Fleur des moissons devenue rare en nature, très appréciée des abeilles et des papillons.",
+    "xpBase": 10,
+    "sourcesGraines": ["grainotheque", "kokopelli"]
+  },
+  {
+    "id": "capucine",
+    "nom": "Capucine",
+    "latin": "Tropaeolum majus",
+    "icone": "🌻",
+    "categorie": "fleur",
+    "tags": ["comestible", "facile", "grimpante"],
+    "description": "Fleurs et feuilles comestibles au goût poivré, pousse très vite, repousse certains insectes nuisibles.",
+    "xpBase": 10,
+    "sourcesGraines": ["grainotheque", "kokopelli", "bourse-graines"]
+  },
+  {
+    "id": "lavande",
+    "nom": "Lavande vraie",
+    "latin": "Lavandula angustifolia",
+    "icone": "💜",
+    "categorie": "fleur",
+    "tags": ["mellifère", "aromatique", "résistante sécheresse"],
+    "description": "Arbuste bas très mellifère, parfumé, parfait en pied de façade ou jardinière ensoleillée.",
+    "xpBase": 10,
+    "sourcesGraines": ["grainotheque", "semences-paysannes"]
+  },
+  {
+    "id": "tournesol",
+    "nom": "Tournesol",
+    "latin": "Helianthus annuus",
+    "icone": "🌻",
+    "categorie": "fleur",
+    "tags": ["mellifère", "facile", "spectaculaire"],
+    "description": "Croissance rapide et spectaculaire, graines comestibles pour les humains comme pour les oiseaux.",
+    "xpBase": 10,
+    "sourcesGraines": ["grainotheque", "kokopelli", "bourse-graines"]
+  },
+  {
+    "id": "tomate-cerise",
+    "nom": "Tomate cerise",
+    "latin": "Solanum lycopersicum",
+    "icone": "🍅",
+    "categorie": "legume-fruit",
+    "tags": ["comestible", "facile", "jardinière"],
+    "description": "Idéale en jardinière ou en bac, production généreuse tout l'été, parfaite pour débuter.",
+    "xpBase": 20,
+    "sourcesGraines": ["grainotheque", "kokopelli", "semences-paysannes"]
+  },
+  {
+    "id": "fraisier",
+    "nom": "Fraisier des jardins",
+    "latin": "Fragaria x ananassa",
+    "icone": "🍓",
+    "categorie": "legume-fruit",
+    "tags": ["comestible", "vivace", "couvre-sol"],
+    "description": "Vivace qui revient chaque année, se multiplie par stolons, parfait en bordure ou jardinière.",
+    "xpBase": 20,
+    "sourcesGraines": ["grainotheque", "bourse-graines"]
+  },
+  {
+    "id": "radis",
+    "nom": "Radis rose",
+    "latin": "Raphanus sativus",
+    "icone": "🥕",
+    "categorie": "legume-fruit",
+    "tags": ["comestible", "très rapide", "débutant"],
+    "description": "L'un des légumes les plus rapides à récolter (3-4 semaines), parfait pour se motiver dès le début.",
+    "xpBase": 20,
+    "sourcesGraines": ["grainotheque", "kokopelli"]
+  },
+  {
+    "id": "haricot-grimpant",
+    "nom": "Haricot grimpant",
+    "latin": "Phaseolus vulgaris",
+    "icone": "🫛",
+    "categorie": "legume-fruit",
+    "tags": ["comestible", "grimpant", "productif"],
+    "description": "Grimpe sur un simple tuteur ou un grillage, très productif tout l'été en pied de façade.",
+    "xpBase": 20,
+    "sourcesGraines": ["grainotheque", "semences-paysannes"]
+  },
+  {
+    "id": "framboisier",
+    "nom": "Framboisier",
+    "latin": "Rubus idaeus",
+    "icone": "🫐",
+    "categorie": "legume-fruit",
+    "tags": ["comestible", "vivace", "haie fruitière"],
+    "description": "Vivace généreux, s'étend en massif au fil des ans, parfait pour une haie fruitière participative.",
+    "xpBase": 20,
+    "sourcesGraines": ["grainotheque", "bourse-graines"]
+  }
+]
