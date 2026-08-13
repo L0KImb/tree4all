@@ -1,0 +1,50 @@
+[
+  {
+    "id": "grainotheque",
+    "nom": "Grainothèque locale",
+    "pays": "France & Belgique",
+    "type": "Gratuit",
+    "icone": "📦",
+    "description": "Réseau de boîtes à graines gratuites en bibliothèques et jardins partagés — on dépose, on emprunte, sans argent.",
+    "urlFr": "https://umap.openstreetmap.fr/fr/map/carte-des-grainotheques_5922",
+    "urlFrLabel": "Carte des grainothèques (Graines de Troc)",
+    "urlBe": "https://www.lepotagerdugailleroux.com/grainotheques-wallonie-bruxelles-belgique/",
+    "urlBeLabel": "Liste des grainothèques (Belgique)"
+  },
+  {
+    "id": "kokopelli",
+    "nom": "Kokopelli",
+    "pays": "France",
+    "type": "Association",
+    "icone": "🌻",
+    "description": "Association pour la sauvegarde des semences reproductibles et biologiques, plus de 1400 variétés en catalogue.",
+    "url": "https://kokopelli-semences.fr"
+  },
+  {
+    "id": "semences-paysannes",
+    "nom": "Réseau Semences Paysannes",
+    "pays": "France",
+    "type": "Fédération associative",
+    "icone": "🌾",
+    "description": "Ne vend pas directement de graines, mais oriente vers ses producteurs membres et organise des bourses d'échange de graines locales.",
+    "url": "https://www.semencespaysannes.org"
+  },
+  {
+    "id": "cycle-en-terre",
+    "nom": "Cycle en Terre",
+    "pays": "Belgique",
+    "type": "Coopérative",
+    "icone": "🌿",
+    "description": "Coopérative belge à finalité sociale, semences biologiques reproductibles locales, diffusées aussi via une centaine de points de vente.",
+    "url": "https://cycle-en-terre.be"
+  },
+  {
+    "id": "bourse-graines",
+    "nom": "Bourse aux graines locale",
+    "pays": "France & Belgique",
+    "type": "Événement",
+    "icone": "🤝",
+    "description": "Rencontres d'échange de graines entre habitants, souvent organisées au printemps par des associations de quartier ou jardins partagés.",
+    "url": null
+  }
+]

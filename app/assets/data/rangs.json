@@ -1,0 +1,63 @@
+[
+  {
+    "id": "graine-eveillee",
+    "seuilXp": 0,
+    "nom": "Graine Éveillée",
+    "icone": "🌰",
+    "flavor": "Chaque grand arbre fut un jour une graine qui a osé s'éveiller."
+  },
+  {
+    "id": "pousse-novice",
+    "seuilXp": 50,
+    "nom": "Pousse Novice",
+    "icone": "🌱",
+    "flavor": "Tes premières racines touchent la terre. Le monde en prend note."
+  },
+  {
+    "id": "apprenti-sylvain",
+    "seuilXp": 150,
+    "nom": "Apprenti Sylvain",
+    "icone": "🌿",
+    "flavor": "Les esprits de la forêt commencent à murmurer ton nom."
+  },
+  {
+    "id": "gardien-chene-guernica",
+    "seuilXp": 350,
+    "nom": "Gardien du Chêne de Guernica",
+    "icone": "🌳",
+    "flavor": "Comme le chêne millénaire du Pays Basque, tu deviens symbole d'enracinement.",
+    "inspiration": "Le Chêne de Guernica (Espagne) est un arbre réel, symbole historique de liberté."
+  },
+  {
+    "id": "sylphe-grand-banian",
+    "seuilXp": 700,
+    "nom": "Sylphe du Grand Banian",
+    "icone": "🍃",
+    "flavor": "Ton feuillage s'étend maintenant sur plusieurs vies, comme le Grand Banian.",
+    "inspiration": "Le Great Banyan (Inde) est l'un des plus vastes arbres au monde par sa canopée."
+  },
+  {
+    "id": "mage-arbre-tenere",
+    "seuilXp": 1300,
+    "nom": "Mage de l'Arbre du Ténéré",
+    "icone": "🔮",
+    "flavor": "Seul au cœur du désert, l'Arbre du Ténéré a survécu des siècles. Ta magie aussi.",
+    "inspiration": "L'Arbre du Ténéré (Niger) fut longtemps l'arbre le plus isolé de la planète."
+  },
+  {
+    "id": "archimage-pando",
+    "seuilXp": 2500,
+    "nom": "Archimage de Pando",
+    "icone": "✨",
+    "flavor": "Un seul être, des milliers de troncs : ta magie se propage sous terre, invisible et immense.",
+    "inspiration": "Pando (Utah) est un unique organisme d'environ 47 000 trembles reliés par une seule souche."
+  },
+  {
+    "id": "elu-yggdrasil",
+    "seuilXp": 5000,
+    "nom": "Élu d'Yggdrasil",
+    "icone": "🌌",
+    "flavor": "Tu as rejoint la légende : l'Arbre-Monde qui relie tous les royaumes.",
+    "inspiration": "Yggdrasil, le Frêne-Monde de la mythologie nordique."
+  }
+]
