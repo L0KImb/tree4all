@@ -156,10 +156,16 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _handleMapTap(LatLng point) async {
     if (!_checkZoningMode) return;
     setState(() => _checkingZoning = true);
-    final info = await GpuService.lookup(point.latitude, point.longitude);
+    final results = await Future.wait([
+      GpuService.lookup(point.latitude, point.longitude),
+      GpuService.lookupNature(point.latitude, point.longitude),
+    ]);
     setState(() => _checkingZoning = false);
     if (!mounted) return;
-    if (info == null) {
+    final info = results[0] as GpuZoneInfo?;
+    final natureInfos = results[1] as List<NatureZoneInfo>;
+
+    if (info == null && natureInfos.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Aucune donnée de zonage disponible ici (hors France, ou zone non numérisée)."),
       ));
@@ -169,18 +175,31 @@ class _MapScreenState extends State<MapScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.parchment,
-        title: Text('Zonage : ${info.libelle} (${info.typezone})', style: AppTheme.title(size: 16)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (info.libelong.isNotEmpty) Text(info.libelong, style: AppTheme.body(size: 14, color: AppColors.inkSoft)),
-            const SizedBox(height: 10),
-            Text(info.resume, style: AppTheme.body(size: 14)),
-            const SizedBox(height: 10),
-            Text('Source : Géoportail de l\'Urbanisme (gouvernement français). Un zonage favorable n\'est jamais une autorisation automatique de planter.',
-                style: AppTheme.ui(size: 11, color: AppColors.inkSoft)),
-          ],
+        title: Text(info != null ? 'Zonage : ${info.libelle} (${info.typezone})' : 'Zones protégées', style: AppTheme.title(size: 16)),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (info != null) ...[
+                if (info.libelong.isNotEmpty) Text(info.libelong, style: AppTheme.body(size: 14, color: AppColors.inkSoft)),
+                const SizedBox(height: 8),
+                Text(info.resume, style: AppTheme.body(size: 14)),
+              ],
+              if (natureInfos.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Text('ZONES PROTÉGÉES À CET ENDROIT', style: AppTheme.ui(size: 12, color: AppColors.arcane)),
+                const SizedBox(height: 6),
+                ...natureInfos.map((n) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Text('🛡️ ${n.label} — ${n.nom}', style: AppTheme.body(size: 14)),
+                    )),
+              ],
+              const SizedBox(height: 10),
+              Text('Source : Géoportail de l\'Urbanisme et API Nature (IGN, gouvernement français). Une indication favorable n\'est jamais une autorisation automatique de planter.',
+                  style: AppTheme.ui(size: 11, color: AppColors.inkSoft)),
+            ],
+          ),
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Fermer')),
