@@ -5,6 +5,7 @@ import '../models/zone.dart';
 import '../models/species.dart';
 import '../models/rank.dart';
 import '../models/seed_source.dart';
+import '../models/legendary_place.dart';
 
 /// Charge une fois toutes les données embarquées (assets/data/*.json)
 /// et les rend disponibles en mémoire pour le reste de l'app.
@@ -14,13 +15,17 @@ class Catalog {
   final Map<String, Species> speciesById;
   final List<Rank> ranks;
   final Map<String, SeedSource> seedSourcesById;
+  final List<LegendaryPlace> legendaryPlaces;
+  final Map<String, LegendaryPlace> legendaryPlaceById;
 
   Catalog({
     required this.zones,
     required this.species,
     required this.ranks,
     required this.seedSourcesById,
-  }) : speciesById = {for (final s in species) s.id: s};
+    required this.legendaryPlaces,
+  })  : speciesById = {for (final s in species) s.id: s},
+        legendaryPlaceById = {for (final l in legendaryPlaces) l.id: l};
 
   static Future<Catalog> load() async {
     final results = await Future.wait([
@@ -28,12 +33,14 @@ class Catalog {
       rootBundle.loadString('assets/data/especes.json'),
       rootBundle.loadString('assets/data/rangs.json'),
       rootBundle.loadString('assets/data/sources-graines.json'),
+      rootBundle.loadString('assets/data/lieux-legendaires.json'),
     ]);
 
     final zonesJson = jsonDecode(results[0]) as List<dynamic>;
     final speciesJson = jsonDecode(results[1]) as List<dynamic>;
     final ranksJson = jsonDecode(results[2]) as List<dynamic>;
     final sourcesJson = jsonDecode(results[3]) as List<dynamic>;
+    final legendaryJson = jsonDecode(results[4]) as List<dynamic>;
 
     final zones = zonesJson.map((e) => Zone.fromJson(e as Map<String, dynamic>)).toList();
     final species = speciesJson.map((e) => Species.fromJson(e as Map<String, dynamic>)).toList();
@@ -42,8 +49,9 @@ class Catalog {
     final sources = {
       for (final e in sourcesJson) (e as Map<String, dynamic>)['id'] as String: SeedSource.fromJson(e)
     };
+    final legendaryPlaces = legendaryJson.map((e) => LegendaryPlace.fromJson(e as Map<String, dynamic>)).toList();
 
-    return Catalog(zones: zones, species: species, ranks: ranks, seedSourcesById: sources);
+    return Catalog(zones: zones, species: species, ranks: ranks, seedSourcesById: sources, legendaryPlaces: legendaryPlaces);
   }
 
   List<Species> speciesByCategory(String categorie) =>

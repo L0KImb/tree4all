@@ -47,6 +47,26 @@ class _AppLoaderState extends State<_AppLoader> {
     return FutureBuilder<Catalog>(
       future: _catalogFuture,
       builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            backgroundColor: AppColors.nightDeep,
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🥀', style: TextStyle(fontSize: 40)),
+                    const SizedBox(height: 12),
+                    Text('Le grimoire n\'a pas pu s\'ouvrir', style: AppTheme.title(size: 17, color: AppColors.glow)),
+                    const SizedBox(height: 8),
+                    Text('Réinstalle l\'application si le problème persiste.', style: AppTheme.body(size: 14, color: AppColors.glow), textAlign: TextAlign.center),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: AppColors.nightDeep,

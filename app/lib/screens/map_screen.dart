@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 import '../models/zone.dart';
 import '../models/species.dart';
+import '../models/legendary_place.dart';
 import '../services/gpu_service.dart';
 import '../state/catalog.dart';
 import '../state/player_state.dart';
@@ -14,6 +16,7 @@ import '../sheets/zone_sheet.dart';
 import '../sheets/grimoire_sheet.dart';
 import '../sheets/add_plantation_sheet.dart';
 import '../sheets/levelup_sheet.dart';
+import '../sheets/legendary_place_sheet.dart';
 
 class MapScreen extends StatefulWidget {
   final Catalog catalog;
@@ -29,10 +32,73 @@ class _MapScreenState extends State<MapScreen> {
   bool _checkZoningMode = false;
   bool _checkingZoning = false;
   bool _showDemoBanner = true;
+  bool _locating = false;
+  bool _showLegendary = false;
+
+  // Les 3324 zones ne changent jamais en cours de session : on ne recalcule
+  // la liste de Marker que lorsque le filtre change, pas à chaque rebuild
+  // (rang, XP, bannière...) — sinon 3324 widgets sont reconstruits en vain.
+  List<Marker>? _markersCache;
+  String? _markersCacheFilter;
 
   List<Zone> get _filteredZones {
     if (_filter == 'all') return widget.catalog.zones;
     return widget.catalog.zones.where((z) => z.type == _filter).toList();
+  }
+
+  List<Marker> get _markers {
+    if (_markersCache != null && _markersCacheFilter == _filter) return _markersCache!;
+    final built = _filteredZones.map((zone) {
+      return Marker(
+        point: LatLng(zone.lat, zone.lng),
+        width: 38,
+        height: 38,
+        child: GestureDetector(
+          onTap: () => _openZoneSheet(zone),
+          child: _ZoneMarker(color: _zoneColor(zone.type), icon: _zoneIcon(zone.type)),
+        ),
+      );
+    }).toList();
+    _markersCache = built;
+    _markersCacheFilter = _filter;
+    return built;
+  }
+
+  List<Marker>? _legendaryMarkersCache;
+  List<Marker> get _legendaryMarkers {
+    if (_legendaryMarkersCache != null) return _legendaryMarkersCache!;
+    final built = widget.catalog.legendaryPlaces.map((place) {
+      return Marker(
+        point: LatLng(place.lat, place.lng),
+        width: 38,
+        height: 38,
+        child: GestureDetector(
+          onTap: () => _openLegendarySheet(place),
+          child: const _LegendaryMarker(),
+        ),
+      );
+    }).toList();
+    _legendaryMarkersCache = built;
+    return built;
+  }
+
+  void _openLegendarySheet(LegendaryPlace place) {
+    final player = context.read<PlayerState>();
+    _showSheet(
+      LegendaryPlaceSheet(
+        place: place,
+        visited: player.hasVisited(place.id),
+        onVisit: () async {
+          final isNew = await player.markVisited(place.id);
+          if (!mounted) return;
+          Navigator.pop(context);
+          if (isNew) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('🔮 Lieu découvert ! +15 XP')));
+          }
+          _openLegendarySheet(place);
+        },
+      ),
+    );
   }
 
   Color _zoneColor(String type) {
@@ -208,6 +274,39 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  Future<void> _locateMe() async {
+    if (_locating) return;
+    setState(() => _locating = true);
+    try {
+      if (!await Geolocator.isLocationServiceEnabled()) {
+        _showLocationMessage("Active la localisation dans les réglages de ton téléphone pour utiliser cette fonction.");
+        return;
+      }
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        _showLocationMessage("Permission de localisation refusée — tu peux l'activer dans les réglages de l'app.");
+        return;
+      }
+      final pos = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(accuracy: LocationAccuracy.medium),
+      );
+      if (!mounted) return;
+      _mapController.move(LatLng(pos.latitude, pos.longitude), 14);
+    } catch (_) {
+      _showLocationMessage("Impossible de te localiser pour le moment.");
+    } finally {
+      if (mounted) setState(() => _locating = false);
+    }
+  }
+
+  void _showLocationMessage(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final player = context.watch<PlayerState>();
@@ -217,18 +316,6 @@ class _MapScreenState extends State<MapScreen> {
       final span = r.next!.seuilXp - r.current.seuilXp;
       progress = span > 0 ? ((player.xp - r.current.seuilXp) / span).clamp(0, 1).toDouble() : 1;
     }
-
-    final markers = _filteredZones.map((zone) {
-      return Marker(
-        point: LatLng(zone.lat, zone.lng),
-        width: 38,
-        height: 38,
-        child: GestureDetector(
-          onTap: () => _openZoneSheet(zone),
-          child: _ZoneMarker(color: _zoneColor(zone.type), icon: _zoneIcon(zone.type)),
-        ),
-      );
-    }).toList();
 
     return Scaffold(
       body: Stack(
@@ -243,13 +330,14 @@ class _MapScreenState extends State<MapScreen> {
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.tree4all.app',
+                userAgentPackageName: 'com.tree4all.tree4all',
+                maxZoom: 19,
               ),
               MarkerClusterLayerWidget(
                 options: MarkerClusterLayerOptions(
                   maxClusterRadius: 50,
                   size: const Size(42, 42),
-                  markers: markers,
+                  markers: _markers,
                   builder: (context, clusterMarkers) => Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -260,6 +348,29 @@ class _MapScreenState extends State<MapScreen> {
                     child: Text('${clusterMarkers.length}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                   ),
                 ),
+              ),
+              if (_showLegendary)
+                MarkerClusterLayerWidget(
+                  options: MarkerClusterLayerOptions(
+                    maxClusterRadius: 60,
+                    size: const Size(42, 42),
+                    markers: _legendaryMarkers,
+                    builder: (context, clusterMarkers) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.night,
+                        border: Border.all(color: AppColors.arcaneLight, width: 2),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text('${clusterMarkers.length}', style: const TextStyle(color: AppColors.glow, fontWeight: FontWeight.bold, fontSize: 12)),
+                    ),
+                  ),
+                ),
+              RichAttributionWidget(
+                alignment: AttributionAlignment.bottomLeft,
+                attributions: [
+                  TextSourceAttribution('© OpenStreetMap contributors'),
+                ],
               ),
             ],
           ),
@@ -275,7 +386,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: Stack(
                   children: [
                     Text(
-                      '🌍 ${widget.catalog.zones.length} zones réelles (Paris, GPSO, Bruxelles). Couverture partielle ailleurs — touche 🔍 pour vérifier un zonage n\'importe où en France.',
+                      '🌍 ${widget.catalog.zones.length} zones réelles (Paris, Marseille, Bruxelles, Liège…). Couverture partielle ailleurs — touche 🔍 pour vérifier un zonage n\'importe où en France.',
                       style: AppTheme.ui(size: 12, color: AppColors.glow, weight: FontWeight.w500),
                     ),
                     Positioned(
@@ -353,6 +464,28 @@ class _MapScreenState extends State<MapScreen> {
 
           Positioned(
             right: 12,
+            bottom: 266,
+            child: FloatingActionButton(
+              heroTag: 'legendary',
+              backgroundColor: _showLegendary ? AppColors.arcaneLight : Colors.white,
+              onPressed: () => setState(() => _showLegendary = !_showLegendary),
+              child: Text(kLegendaryIcon, style: const TextStyle(fontSize: 18)),
+            ),
+          ),
+          Positioned(
+            right: 12,
+            bottom: 202,
+            child: FloatingActionButton(
+              heroTag: 'locate',
+              backgroundColor: Colors.white,
+              onPressed: _locateMe,
+              child: _locating
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                  : const Text('📍', style: TextStyle(fontSize: 18)),
+            ),
+          ),
+          Positioned(
+            right: 12,
             bottom: 74,
             child: FloatingActionButton(
               heroTag: 'zoning',
@@ -395,6 +528,24 @@ class _ZoneMarker extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Text(icon, style: const TextStyle(fontSize: 16)),
+    );
+  }
+}
+
+class _LegendaryMarker extends StatelessWidget {
+  const _LegendaryMarker();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: const RadialGradient(colors: [Color(0xFF3A2760), AppColors.night]),
+        border: Border.all(color: AppColors.arcaneLight, width: 2),
+        boxShadow: [BoxShadow(color: AppColors.arcaneLight.withValues(alpha: 0.5), blurRadius: 7, spreadRadius: 1)],
+      ),
+      alignment: Alignment.center,
+      child: const Text(kLegendaryIcon, style: TextStyle(fontSize: 16)),
     );
   }
 }

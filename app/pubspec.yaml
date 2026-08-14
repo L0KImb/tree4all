@@ -40,7 +40,6 @@ dependencies:
   latlong2: ^0.9.1
   provider: ^6.1.2
   shared_preferences: ^2.3.3
-  google_fonts: ^6.2.1
   http: ^1.2.2
   url_launcher: ^6.3.1
   geolocator: ^13.0.2
@@ -69,6 +68,23 @@ flutter:
 
   assets:
     - assets/data/
+
+  fonts:
+    - family: Cinzel
+      fonts:
+        - asset: assets/fonts/Cinzel-Bold.woff2
+          weight: 700
+    - family: Cinzel Decorative
+      fonts:
+        - asset: assets/fonts/CinzelDecorative-Bold.woff2
+          weight: 700
+    - family: EB Garamond
+      fonts:
+        - asset: assets/fonts/EBGaramond-Regular.woff2
+          weight: 400
+        - asset: assets/fonts/EBGaramond-Italic.woff2
+          weight: 400
+          style: italic
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

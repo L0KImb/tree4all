@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/legendary_place.dart';
 import '../state/catalog.dart';
 import '../state/player_state.dart';
 import '../theme/app_theme.dart';
@@ -95,6 +96,42 @@ class GrimoireSheet extends StatelessWidget {
                       ),
                     ),
                     Text('+${p.xpGained} XP', style: AppTheme.ui(size: 12.5, color: AppColors.forest)),
+                  ],
+                ),
+              );
+            }),
+          const SizedBox(height: 24),
+          Text('LIEUX LÉGENDAIRES DÉCOUVERTS (${player.visitedPlaceIds.length}/${catalog.legendaryPlaces.length})',
+              style: AppTheme.ui(size: 13, color: AppColors.arcane)),
+          const SizedBox(height: 6),
+          if (player.visitedPlaceIds.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                'Touche 🔮 sur la carte pour révéler les mégalithes, sites païens et récits de sorcellerie autour de toi.',
+                style: AppTheme.body(size: 14.5, color: AppColors.inkSoft, fontStyle: FontStyle.italic),
+              ),
+            )
+          else
+            ...catalog.legendaryPlaces.where((p) => player.hasVisited(p.id)).map((LegendaryPlace p) {
+              return Container(
+                padding: const EdgeInsets.symmetric(vertical: 9),
+                decoration: const BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Color(0x33C9A961))),
+                ),
+                child: Row(
+                  children: [
+                    const Text(kLegendaryIcon, style: TextStyle(fontSize: 18)),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(p.nom, style: AppTheme.title(size: 14)),
+                          Text(p.ville, style: AppTheme.ui(size: 11.5, color: AppColors.inkSoft)),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               );

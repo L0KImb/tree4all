@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Palette "fantasy médiéval" — portée depuis le prototype web.
 class AppColors {
@@ -20,17 +19,22 @@ class AppColors {
 }
 
 class AppTheme {
+  // Cinzel/EB Garamond sont embarquées en assets/fonts (voir pubspec.yaml) —
+  // plus de dépendance réseau au runtime (google_fonts téléchargeait ces
+  // polices à la volée, ce qui échouait silencieusement sans connexion).
   static TextStyle title({double size = 20, FontWeight weight = FontWeight.w700, Color? color}) =>
-      GoogleFonts.cinzel(fontSize: size, fontWeight: weight, color: color ?? AppColors.night);
+      TextStyle(fontFamily: 'Cinzel', fontSize: size, fontWeight: weight, color: color ?? AppColors.night);
 
   static TextStyle titleDecorative({double size = 22, Color? color}) =>
-      GoogleFonts.cinzelDecorative(fontSize: size, fontWeight: FontWeight.w700, color: color ?? AppColors.glow);
+      TextStyle(fontFamily: 'Cinzel Decorative', fontSize: size, fontWeight: FontWeight.w700, color: color ?? AppColors.glow);
 
   static TextStyle body({double size = 15, Color? color, FontStyle? fontStyle}) =>
-      GoogleFonts.ebGaramond(fontSize: size, color: color ?? AppColors.ink, fontStyle: fontStyle);
+      TextStyle(fontFamily: 'EB Garamond', fontSize: size, color: color ?? AppColors.ink, fontStyle: fontStyle);
 
+  // Police système (Roboto/San Francisco) pour les libellés d'UI : lisible à
+  // toute graisse sans avoir à embarquer 5 poids d'une police supplémentaire.
   static TextStyle ui({double size = 13, FontWeight weight = FontWeight.w600, Color? color}) =>
-      GoogleFonts.nunito(fontSize: size, fontWeight: weight, color: color ?? AppColors.ink);
+      TextStyle(fontSize: size, fontWeight: weight, color: color ?? AppColors.ink);
 
   static ThemeData get theme {
     final base = ThemeData(
@@ -43,7 +47,6 @@ class AppTheme {
         surface: AppColors.parchment,
       ),
       scaffoldBackgroundColor: AppColors.nightDeep,
-      fontFamily: GoogleFonts.nunito().fontFamily,
     );
     return base.copyWith(
       appBarTheme: AppBarTheme(

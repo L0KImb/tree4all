@@ -17,7 +17,10 @@ class PlayerState extends ChangeNotifier {
 
   int xp = 0;
   final List<Plantation> plantations = [];
+  final Set<String> visitedPlaceIds = {};
   bool _loaded = false;
+
+  static const int visitXp = 15;
 
   Future<void> load() async {
     if (_loaded) return;
@@ -30,6 +33,9 @@ class PlayerState extends ChangeNotifier {
       for (final e in (data['plantations'] as List<dynamic>? ?? [])) {
         plantations.add(Plantation.fromJson(e as Map<String, dynamic>));
       }
+      visitedPlaceIds
+        ..clear()
+        ..addAll((data['visitedPlaceIds'] as List<dynamic>? ?? []).cast<String>());
     }
     _loaded = true;
     notifyListeners();
@@ -40,7 +46,21 @@ class PlayerState extends ChangeNotifier {
     await prefs.setString(_prefsKey, jsonEncode({
       'xp': xp,
       'plantations': plantations.map((p) => p.toJson()).toList(),
+      'visitedPlaceIds': visitedPlaceIds.toList(),
     }));
+  }
+
+  bool hasVisited(String placeId) => visitedPlaceIds.contains(placeId);
+
+  /// Marque un lieu légendaire comme visité/découvert, accorde un petit bonus
+  /// d'XP la première fois. Retourne true si c'était une nouvelle découverte.
+  Future<bool> markVisited(String placeId) async {
+    if (visitedPlaceIds.contains(placeId)) return false;
+    visitedPlaceIds.add(placeId);
+    xp += visitXp;
+    await _persist();
+    notifyListeners();
+    return true;
   }
 
   /// Ajoute une plantation, calcule l'XP (base * bonus première fois * bonus zone),
